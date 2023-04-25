@@ -116,6 +116,14 @@ func ProgressDlg() Ihandle {
 	return h
 }
 
+// https://www.tecgraf.puc-rio.br/iup/en/dlg/iupgetparam.html
+func GetParam(title string) int {
+	cTitle, test := C.CString(title), C.CString("Sep1 %t")
+	defer C.free(unsafe.Pointer(cTitle))
+	defer C.free(unsafe.Pointer(test))
+	return int(C.IupGetParam(cTitle, uintptr(unsafe.Pointer(nil)), uintptr(unsafe.Pointer(nil)), test, uintptr(unsafe.Pointer(nil))))
+}
+
 // Alarm shows a modal dialog containing a message and up to three buttons.
 //
 // https://www.tecgraf.puc-rio.br/iup/en/dlg/iupalarm.html
